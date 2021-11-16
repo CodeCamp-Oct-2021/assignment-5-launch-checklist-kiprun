@@ -1,7 +1,7 @@
 // Write your helper functions here!
 require('isomorphic-fetch');
 
-function addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl) {
+function addDestinationInfo(doc, name, diameter, star, distance, moons, imageUrl) {
    // Here is the HTML formatting for our mission target div.
         let missionTarget = document.getElementById('missionTarget');
             missionTarget.innerHTML = 
@@ -100,7 +100,8 @@ async function myFetch() {
 }
 
 function pickPlanet(planets) {
-    index = (index + 1) % planets.length;
+    // index = (index + 1) % planets.length;
+    index = 1;
     return planets[index];
 }
 

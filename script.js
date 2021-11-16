@@ -12,7 +12,7 @@ window.addEventListener("load", function() {
        console.log(listedPlanets);
 
     let randomPlanet = pickPlanet(listedPlanets);
-    addDestinationInfo(document, randomPlanet.name, randomPlanet.diameter, randomPlanet.star, randomPlanet.distance, randomPlanet.moons, randomPlanet.imageUrl)
+    addDestinationInfo(document, randomPlanet.name, randomPlanet.diameter, randomPlanet.star, randomPlanet.distance, randomPlanet.moons, randomPlanet.image)
     
     
        // Below this comment call the appropriate helper functions to pick a planet fom the list of planets and add that information to your destination.
@@ -30,7 +30,7 @@ window.addEventListener("load", function() {
         let cargoLevel = document.querySelector("input[name=cargoMass]");
         event.preventDefault();
     
-    formSubmission(document, list, pilot.value, copilot.value, fuelLevel.value, cargoLevel)
+    formSubmission(document, list, pilot.value, copilot.value, fuelLevel.value, cargoLevel.value)
         
 
    })
