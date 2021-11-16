@@ -3,17 +3,17 @@ require('isomorphic-fetch');
 
 function addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl) {
    // Here is the HTML formatting for our mission target div.
-   /*
-                <h2>Mission Destination</h2>
+        let missionTarget = document.getElementById('missionTarget');
+            missionTarget.innerHTML = 
+               `<h2>Mission Destination</h2>
                 <ol>
-                    <li>Name: </li>
-                    <li>Diameter: </li>
+                    <li>Name: ${name} </li>
+                    <li>Diameter: ${diameter} </li>
                     <li>Star: ${star}</li>
-                    <li>Distance from Earth: </li>
-                    <li>Number of Moons: </li>
+                    <li>Distance from Earth: ${distance} </li>
+                    <li>Number of Moons: ${moons} </li>
                 </ol>
-                <img src="">
-   */
+                <img src="${imageUrl}">`
 }
 
 function validateInput(testInput) {
@@ -45,24 +45,46 @@ function formSubmission(doc, list, pilot, copilot, fuelLevel, cargoLevel) {
             alert("Fuel and cargo levels must be numerical");
    }
    
-   let pilotStatus = document.getElementId("pilotStatus");
-   pilotStatus.innerHTML = "Me"
-   let copilotStatus = document.getElementById("copilotStatus");
-   let fuelStatus = document.getElementId("fuelStatus");
-   let cargoStatus = document.getElementId("cargoStatus");
-   let launchStatus = document.getElementById("launchStatus");
+   let pilotStatus = document.getElementById("pilotStatus")
+   pilotStatus.innerHTML =`Pilot ${pilot} is ready`
+   let copilotStatus = document.getElementById("copilotStatus")
+   copilotStatus.innerHTML =`CoPilot ${copilot} is ready`
+   let fuelStatus = document.getElementById("fuelStatus")
+   let cargoStatus = document.getElementById("cargoStatus")
+   let launchStatus = document.getElementById("launchStatus")   
 
-    list.style.visibility = "visible"
 
-//    if (Number(fuelLevel) < 10000)){
-//     list.style.visibility = "visible"
-    
-    
-//    }
-   
-//    if (Number(validateInput(cargoLevel) >10000)){
-//     list.style.visibility = "visible"
-//    }
+   if (fuelLevel < 10000 && cargoLevel > 10000){
+    list.style.visibility = "visible";
+    fuelStatus.innerHTML = `Not enough fuel for the journey`;
+    cargoStatus.innerHTML = `Too much mass for the shuttle to take off`;
+    launchStatus.innerHTML = `Shuttle not ready to launch`;
+    launchStatus.style.color = "red";
+   }
+
+   if (fuelLevel >= 10000 && cargoLevel > 10000){
+    list.style.visibility = "visible";
+    fuelStatus.innerHTML = `Fuel level high enough for launch`;
+    cargoStatus.innerHTML = `Too much mass for the shuttle to take off`;
+    launchStatus.innerHTML = `Shuttle not ready to launch`;
+    launchStatus.style.color = "red";
+   }
+
+   if (fuelLevel < 10000 && cargoLevel <= 10000){
+    list.style.visibility = "visible";
+    fuelStatus.innerHTML = `Not enough fuel for the journey`;
+    cargoStatus.innerHTML = `Cargo mass low enough for launch`;
+    launchStatus.innerHTML = `Shuttle not ready to launch`;
+    launchStatus.style.color = "red";
+   }
+
+   if (fuelLevel >= 10000 && cargoLevel <= 10000){
+    list.style.visibility = "visible";
+    fuelStatus.innerHTML = 'Fuel level high enough for launch';
+    cargoStatus.innerHTML = 'Cargo mass low enough for launch';
+    launchStatus.innerHTML = `Shuttle is ready for launch`;
+    launchStatus.style.color = "green";
+   }
 
 
 }
@@ -70,13 +92,16 @@ function formSubmission(doc, list, pilot, copilot, fuelLevel, cargoLevel) {
 async function myFetch() {
     let planetsReturned;
 
-    planetsReturned = await fetch().then( function(response) {
-        });
+    planetsReturned = await fetch('https://handlers.education.launchcode.org/static/planets.json').then( function(response) {
+    return response.json();
+    });
 
     return planetsReturned;
 }
 
 function pickPlanet(planets) {
+    index = (index + 1) % planets.length;
+    return planets[index];
 }
 
 module.exports.addDestinationInfo = addDestinationInfo;
